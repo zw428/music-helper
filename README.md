@@ -1,8 +1,6 @@
 # music-helper
 
-An in-progress web application to improve sight-reading skills.
-
-> A Vue.js project
+An in-progress Vue.js web application to improve sight-reading skills.
 
 ## Build Setup
 
