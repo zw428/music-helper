@@ -1,7 +1,7 @@
 <template>
-<div>
+<div class="notes" :style="notes_style">
   <bars/>
-  <note :position="4"/>
+  <note :position="9"/>
 </div>
 </template>
 
@@ -11,6 +11,26 @@ import Note from "@/components/Note";
 
 export default {
   name: "Main",
-  components: {Note, Bars}
+  components: {Note, Bars},
+
+  computed: {
+    notes_style() {
+      const scale = 1.5;
+      const scale_str = "scale(" + scale + ")";
+
+      return {
+        "-ms-transform": scale_str,
+        "-webkit-transform": scale_str,
+        "transform": scale_str
+      }
+    }
+  }
 };
 </script>
+
+<style scoped>
+.notes {
+  transform-origin: top left;
+  margin-top: 70px;
+}
+</style>

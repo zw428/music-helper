@@ -5,16 +5,17 @@
        xmlns="http://www.w3.org/2000/svg"
        width="3.588mm"
        height="12.238mm"
-       viewBox="0 0 3.588 12.238"
+       viewBox="0 0 3.688 12.238"
        :transform="svg_transform" >
     <g>
       <ellipse :style="ellipse_style"
+               class="ellipse"
                cx="1.7929119"
                cy="11.0765"
                rx="1.6835371"
                ry="1.0521128"/>
       <path v-if="stem_needed"
-            :style="stem_style"
+            class="stem"
             d="M 3.4559171,11.08479 V -0.04322" />
     </g>
   </svg>
@@ -22,6 +23,10 @@
 </template>
 
 <script>
+const note_y_start = 18.7;
+const note_increment_scale = 7.46;
+const flipped_translate_y = -36.8;
+
 export default {
   name: "Note",
   props: {
@@ -46,26 +51,13 @@ export default {
       }
 
       return {
-        "fill":              "#000000",
         "fill-opacity":      fill_opacity,
-        "stroke":            "#000000",
-        "stroke-width":      0.21874945,
-        "stroke-miterlimit": 4
-      }
-    },
-
-    stem_style() {
-      return {
-        "stroke":          "#000000",
-        "stroke-width":    "0.26458332px",
-        "stroke-linecap":  "butt",
-        "stroke-linejoin": "miter"
       }
     },
 
     svg_transform() {
       if (this.stem_needed && this.position > 4) {
-        return "scale(1,-1) translate(0,-38.1)";
+        return "scale(1,-1) translate(0," + flipped_translate_y + ")";
       }
 
       return "";
@@ -73,7 +65,7 @@ export default {
 
     note_style() {
       return {
-        top: String(27 - (this.position-1)*7.65) + "px"
+        top: String(note_y_start - (this.position-1)*note_increment_scale) + "px"
       }
     },
 
@@ -88,5 +80,19 @@ export default {
 .note-div {
   position: absolute;
   display: inline-block;
+}
+
+.stem {
+  stroke:          #000000;
+  stroke-width:    0.26458332px;
+  stroke-linecap:  butt;
+  stroke-linejoin: miter;
+}
+
+.ellipse {
+  fill:              #000000;
+  stroke:            #000000;
+  stroke-width:      0.21874945;
+  stroke-miterlimit: 4;
 }
 </style>
