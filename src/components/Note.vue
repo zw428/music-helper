@@ -29,8 +29,8 @@ const note_increment_scale     = 7.46;
 const flipped_translate_y      = -36.8;
 const flipped_stem_translate_x = -3.3;
 const flipped_position         = 5;
-const max_x_pos                = 340.5;
-const x_offset                 = 0.5;
+const max_x_pos                = 340;
+const x_offset                 = 9;
 
 export default {
   name: "Note",
