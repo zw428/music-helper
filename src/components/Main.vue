@@ -1,7 +1,8 @@
 <template>
 <div class="notes" :style="notes_style">
   <bars/>
-  <note :position="9"/>
+  <note :vert_position="5"
+        :horiz_fraction="0"/>
 </div>
 </template>
 

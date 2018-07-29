@@ -15,6 +15,7 @@
                rx="1.6835371"
                ry="1.0521128"/>
       <path v-if="stem_needed"
+            :transform="stem_transform"
             class="stem"
             d="M 3.4559171,11.08479 V -0.04322" />
     </g>
@@ -23,9 +24,13 @@
 </template>
 
 <script>
-const note_y_start = 18.7;
-const note_increment_scale = 7.46;
-const flipped_translate_y = -36.8;
+const note_y_start             = 18.7;
+const note_increment_scale     = 7.46;
+const flipped_translate_y      = -36.8;
+const flipped_stem_translate_x = -3.3;
+const flipped_position         = 5;
+const max_x_pos                = 340.5;
+const x_offset                 = 0.5;
 
 export default {
   name: "Note",
@@ -36,9 +41,15 @@ export default {
       default: 4
     },
 
-    position: {
+    vert_position: {
       type: Number,
       required: true
+    },
+
+    horiz_fraction: {
+      type: Number,
+      required: false,
+      default: 0
     }
   },
 
@@ -55,8 +66,18 @@ export default {
       }
     },
 
+    stem_transform() {
+      var translate_x = 0;
+
+      if ( this.vert_position >= flipped_position ) {
+        translate_x = flipped_stem_translate_x;
+      }
+
+      return "translate(" + String(translate_x) + ")"
+    },
+
     svg_transform() {
-      if (this.stem_needed && this.position > 4) {
+      if (this.stem_needed && this.vert_position >= flipped_position) {
         return "scale(1,-1) translate(0," + flipped_translate_y + ")";
       }
 
@@ -65,7 +86,8 @@ export default {
 
     note_style() {
       return {
-        top: String(note_y_start - (this.position-1)*note_increment_scale) + "px"
+        top: String(note_y_start - (this.vert_position-1)*note_increment_scale) + "px",
+        left: String(x_offset + max_x_pos*this.horiz_fraction) + "px"
       }
     },
 
